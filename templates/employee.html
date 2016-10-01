@@ -1,0 +1,197 @@
+{% extends "baseAdmin.html" %}
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Ажилчдын жагсаалт</h5>
+                    <div class="ibox-tools">
+                        <a data-toggle="modal" class="btn btn-success btn-circle btn-xs" href="#modal-form">
+                            <i class="glyphicon glyphicon-plus"></i>
+                        </a>
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                    <!-- emp register modal -->
+                    <div id="modal-form" class="modal fade" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">×</button>
+                                    <h2>Ажилтан бүртгэх</h2>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="m-t" role="form" action="index.php" method="POST">
+                                        <div class="form-group">
+                                            <span class="label label-success" name="compID">Компани ID: {{systemLoged.id}}</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="firstname" placeholder="Овог" required="">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="lastname" placeholder="Нэр" required="">
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="i-checks" style="float: left;margin-right: 20px;">
+                                                <label> 
+                                                    <input type="radio" checked="" name="gender" value="m" id="u_0_e"> 
+                                                    Эрэгтэй 
+                                                </label>
+                                            </div>
+                                            <div class="i-checks">
+                                                <label> 
+                                                    <input type="radio" name="gender" value="f" id="u_0_f">
+                                                    Эмэгтэй 
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <select class="form-control m-b" name="role">
+                                                <option value="admin">Админ</option>
+                                                <option value="employee">Ажилтан</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="phone" placeholder="Утас" required="">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="email" class="form-control" name="email" placeholder="Email" required="">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control" name="password" placeholder="Password" required="">
+                                        </div>
+                                        <button type="submit" class="btn btn-success block full-width m-b">Бүртгэх</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ibox-content">
+                        <!-- ... -->
+                        <div id="editable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="editableEmp" class="editableEmp table table-striped table-bordered table-hover dataTables-example">
+                                        <thead>
+                                            <tr role="row">
+                                                <th style="display:
+                                                    none;">emp ID</th>
+                                                <th>#</th>
+                                                <th>Овог, Нэр</th>
+                                                <th>N-Мэйл хаяг</th>
+                                                <th>Хүйс</th>
+                                                <th>Албан тушаал</th>
+                                                <th>Утас</th>
+                                                <th>Ажилд орсон хугацаа</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for empList in employeeList %}
+                                        <tr class="">
+                                            <td style="display: none;">{{empList.id}}</td>
+                                            <td>{{loop.index}}</td>
+                                            <td>{{empList.firstname}}
+                                                {{empList.lastname}}</td>
+                                            <td>{{empList.email}}</td>
+                                            <td>
+                                                {% if empList.gender == 'f' %}
+                                                Эмэгтэй
+                                                {% endif %}
+                                                {% if empList.gender == 'm' %}
+                                                Эрэгтэй
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if empList.role == 'admin' %}
+                                                <strong>Админ</strong>
+                                                {% endif %}
+                                                {% if empList.role == 'employee' %}
+                                                Ажилтан
+                                                {% endif %}
+                                            </td>
+                                            <td>{{empList.phone}}</td>
+                                            <td>{{empList.createdAt}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="hidden" id="btn_{{section}}" class="btn btn-primary" data-toggle="modal" data-target="#{{section}}_modal"/>
+
+    {% if section == "employee" %}
+    {% include "upEmployee.html" %}
+    {% endif %}
+
+{% endblock %}
+{% block scripting %}
+    {{parent()}}
+    <!-- iCheck -->
+    <script src="js/plugins/iCheck/icheck.min.js"></script>
+    </script>
+    {% if message %}
+    <script>
+    $(document).ready(function () {
+        //alert('{{message}}');
+        $.notify("{{message}}","success");
+    </script>
+    {% endif %}
+    <script type="text/javascript">
+
+      function checkForm(form)
+      {
+        
+        if(form.password.value != "" && form.password.value == form.confirmPass.value) {
+          if(form.password.value.length < 6) {
+            alert("Алдаа: Багадаа 6 тэмдэгт aA1 агуулсан Байна!");
+            form.password.focus();
+            return false;
+          }
+          if(form.password.value == form.username.value) {
+            alert("Error: Password must be different from Username!");
+            form.password.focus();
+            return false;
+          }
+          re = /[0-9]/;
+          if(!re.test(form.password.value)) {
+            alert("Алдаа: Багадаа 6 тэмдэгт aA1 агуулсан Байна!");
+            form.password.focus();
+            return false;
+          }
+          re = /[a-z]/;
+          if(!re.test(form.password.value)) {
+            alert("Алдаа: Багадаа 6 тэмдэгт aA1 агуулсан Байна! (0-9)! (a-z)!");
+            form.password.focus();
+            return false;
+          }
+          re = /[A-Z]/;
+          if(!re.test(form.password.value)) {
+            alert("Error: password must contain at least one uppercase letter (A-Z)!");
+            form.password.focus();
+            return false;
+          }
+        } else {
+          alert("Алдаа: Нууц үг тохирохгүй байна");
+          form.password.focus();
+          return false;
+        }
+
+        //alert("You entered a valid password: " + form.password.value);
+        return true;
+      }
+
+    </script>
+{% endblock %}

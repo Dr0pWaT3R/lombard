@@ -1,0 +1,99 @@
+{% extends "sysAdmin.html" %}
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Компани бүртгэх</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <form class="m-t" role="form" action="index.php" method="POST">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="companyName" placeholder="Нэр" required="">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="companyNumber" placeholder="Утас" required="">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="companyAddress" placeholder="Хаяг" required="">
+                    </div>
+                    <div class="form-group" >
+                        Хугацаа:
+                        <select class="form-control m-b" name="expire">
+                            <option value="14">14 хоног</option>
+                            <option value="30">30 хоног</option>
+                        </select>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <p>Компани админы мэдээлэл</p>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="firstname" placeholder="Овог" required="">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="lastname" placeholder="Нэр" required="">
+                    </div>
+                    <div class="form-group">
+                        <div class="i-checks" style="float: left;margin-right: 20px;">
+                            <label> 
+                                <input type="radio" checked="" name="gender" value="m" id="u_0_e"> 
+                                Эрэгтэй 
+                            </label>
+                        </div>
+                        <div class="i-checks">
+                            <label> 
+                                <input type="radio" name="gender" value="f" id="u_0_f">
+                                Эмэгтэй 
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="phone" placeholder="Утас" required="">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" name="email" placeholder="Email" required="">
+                    </div>
+                    <div class="form-group" style="display: none;">
+                        <select class="form-control m-b" name="role">
+                            <option value="admin">Админ</option>
+                            <option value="employee">Ажилтан</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="password" placeholder="Password" required="">
+                    </div>
+                    <button type="submit" class="btn btn-success block full-width m-b">Бүртгэх</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+   <input type="hidden" id="btn_{{section}}" class="btn btn-primary" data-toggle="modal" data-target="#{{section}}_modal"/>
+
+    {% if section == "employee" %}
+    {% include "upEmployee.html" %}
+    {% endif %}
+
+{% endblock %}
+{% block scripting %}
+    {{parent()}}
+    <!-- iCheck -->
+    <script src="js/plugins/iCheck/icheck.min.js"></script>
+    </script>
+    {% if message %}
+    <script>
+    $(document).ready(function () {
+        //alert('{{message}}');
+        $.notify("{{message}}","success");
+    </script>
+    {% endif %}
+{% endblock %}

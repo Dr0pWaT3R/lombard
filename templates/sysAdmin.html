@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html> 
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Lombard | {{ title }} </title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <link href="css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <link href="css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div id="wrapper">
+
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav metismenu" id="side-menu">
+                    <li class="nav-header">
+                        <div class="dropdown profile-element">
+                            <img alt="image" class="img-circle" src="img/profile.png" />
+
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="clear"> 
+                                    <span class="text-muted text-xs block">
+                                        <strong class="font-bold">{{systemLoged.email}}</strong>
+                                        <b class="caret"></b>
+                                    </span> 
+                                </span> 
+                            </a>
+                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                <li><a href="index.php?logout">Гарах</a></li>
+                            </ul>
+                        </div>
+                        <div class="logo-element">
+                            TL
+                        </div>
+                        <li class="nav-company" title="Компани">
+                            <a href="?companies">
+                                <i class="fa fa-building-o"></i> 
+                                <span class="nav-label">Компаниуд</span>
+                            </a>
+                        </li>
+                        <li class="nav-registerComp" title="Компани БҮртгэх">
+                            <a href="?registerComp">
+                                <i class="fa fa-user"></i> 
+                                <span class="nav-label">Бүртгэх</span>
+                            </a>
+                        </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="gray-bg">
+
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 btn
+                            btn-success" href="#"><i class="fa fa-bars"></i> </a>
+                    </div>
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li>
+                            <a href="index.php?logout">
+                                <i class="fa fa-sign-out"></i> Гарах
+                            </a>
+                        </li>
+                    </ul>
+
+                </nav>
+            </div>
+            {% block content %}
+            Hello World
+
+            {% endblock %}
+            <div class="footer">
+                <div class="pull-right">
+                    <strong></strong> 
+                </div>
+                <div>
+                    Copyright<strong> Lombard </strong> &copy;
+                    {{year-1}}-{{year}}
+                </div>
+            </div>
+        </div> 
+
+    </div>
+
+    {% block scripting %}
+
+    <!-- Mainly scripts -->
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="js/plugins/jeditable/jquery.jeditable.js"></script>
+    <script src="js/bootbox.min.js"></script>
+    <!-- Custom and plugin javascript -->
+    <script src="js/inspinia.js"></script>
+    <script src="js/notify.js"></script>
+    <script src="js/plugins/pace/pace.min.js"></script>
+    <script src="js/plugins/dataTables/datatables.min.js"></script>
+
+    <script type="text/javascript" charset="utf-8">
+        var section = "{{section}}";
+        $(document).ready(function(){
+            $('.nav-'+section).addClass('active');
+        });
+    </script>
+
+    <script src="js/companies.js"></script>
+
+    {% endblock %}
+
+</body>
+
+</html>

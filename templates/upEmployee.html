@@ -1,0 +1,70 @@
+<div class="modal inmodal" id="{{section}}_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content animated flipInY">
+            <form id="empUpdate_form" method="POST" role="form" action="?employee">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-3">
+                            <div class="form-group"><label>Ажилтаны нэр</label>
+                                <input type="text" name="username" placeholder="Нэр" class="form-control">
+                            </div>
+                        </div>
+                        <div class="clearfix visible-xs"></div>
+                        <div class="col-xs-6 col-sm-3">
+                            <div class="form-group"><label>Хүйс</label> 
+                                <select class="form-control m-b" name="gender">
+                                    <option value="m">Эрэгтэй</option>
+                                    <option value="f">Эмэгтэй</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-3">
+                            <div class="form-group"><label>Албан тушаал</label> 
+                                <select class="form-control m-b" name="role">
+                                    <option value="employee">Ажилтан</option>
+                                    <option value="admin">Админ</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-3">
+                            <div class="form-group"><label>Салбар</label> 
+                                <select class="form-control m-b" name="branchId">
+                                    {% for val in brName %}
+                                    <option value="{{val.id}}">{{val.branchName}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-3">
+                            <div class="form-group"><label>И-мэйл</label>
+                                <input type="email" name="email" placeholder="И-мэйл" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-3">
+                            <div class="form-group"><label>Утас</label>
+                                <input type="text" name="phone" placeholder="99999999" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-3">
+                            <div class="form-group"><label>Нууц үг</label>
+                                <input type="password" name="password" placeholder="" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix visible-xs"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" del-val="1" id="btn_empDelete">Устгах</button>
+                    <button type="submit" class="btn btn-primary">Илгээх</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
