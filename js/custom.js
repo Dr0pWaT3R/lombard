@@ -1,61 +1,27 @@
 $(document).ready(function(){
-    //var oTable = $('.dataTables-example').DataTable();
-    $('.debitTable').DataTable( {
+    $('#editableEmp').DataTable({
         dom: '<"html5buttons"B>lTfgitp',
-        buttons: [
-            { extend: 'copy'},
-            {extend: 'csv'},
-            {extend: 'excel', title: section},
-            {extend: 'pdf', title: section},
+    buttons: [
+    { extend: 'copy'},
+    {extend: 'csv'},
+    {extend: 'excel', title: section},
+    {extend: 'pdf', title: section},
 
-            {extend: 'print',
-                customize: function (win){
-                    $(win.document.body).addClass('white-bg');
-                    $(win.document.body).css('font-size', '10px');
-                    $(win.document.body).find('table')
-            .addClass('compact')
-            .css('font-size', 'inherit');
-                }
-            }
-        ]
-        ,
-        "footerCallback": function ( row, data, start, end, display ) {
-            var api = this.api(), data;
-
-            // Remove the formatting to get integer data for summation
-            var intVal = function ( i ) {
-                return typeof i === 'string' ?
-                    i.replace(/[\$,]/g, '')*1 :
-                    typeof i === 'number' ?
-                    i : 0;
-            };
-
-            // Total over all pages
-            total = api
-                .column( 3 )
-                .data()
-                .reduce( function (a, b) {
-                    return intVal(a) + intVal(b);
-                }, 0 );
-
-            // Total over this page
-            pageTotal = api
-                .column( 3, { page: 'current'} )
-                .data()
-                .reduce( function (a, b) {
-                    return intVal(a) + intVal(b);
-                }, 0 );
-
-            // Update footer
-            $( api.column( 3 ).footer() ).html(
-                    pageTotal +'₮ ( Нийт: '+ total +'₮)'
-                    );
+    {extend: 'print',
+        customize: function (win){
+            $(win.document.body).addClass('white-bg');
+            $(win.document.body).css('font-size', '10px');
+            $(win.document.body).find('table')
+        .addClass('compact')
+        .css('font-size', 'inherit');
         }
-    } );
+    }
+    ]
 
+    });
 });
 
-var empId;
+var invoiceId;
 var inputs;
 $("#btn_"+section).click(function(){
 
@@ -148,19 +114,19 @@ $('#empUpdate_form').submit(function(){
         type: "POST",
         data : data,
         success: function(data, textStatus, jqXHR)
-    {
-        var result = $.parseJSON(data);
+        {
+            var result = $.parseJSON(data);
 
-        if (result.success) 
-            alert("Амжилттай"); 
-        else
-            alert("Өөрчлөлт байхгүй"); 
+            if (result.success) 
+                alert("Амжилттай"); 
+            else
+                alert("Өөрчлөлт байхгүй"); 
 
-        console.log(result.success);
-    },
+            console.log(result.success);
+        },
         error: function (jqXHR, textStatus, errorThrown)
-    {
-    }
+        {
+        }
     });
 
 });
@@ -170,7 +136,7 @@ $('#editableEmp').on('click', 'tr', function () {
     var oTable = $('#editableEmp').DataTable();
     var data = oTable.row( this ).data();
     empId = data[0];
-    alert(section);
+    //alert(empId);
 
     $.ajax({
         url : "getdata.php",
@@ -195,6 +161,42 @@ $('#editableEmp').on('click', 'tr', function () {
 
 
 } );
+
+$('.updateBtn').on('click', function() {
+    alert($(this).attr('value'));
+   // compID = $(this).attr('value');
+
+    /* $.ajax({
+        url : "getdata.php",
+        type: "POST",
+        data : {table: section, id: compID},
+        success: function(data)
+        {
+            setCompany(data);
+            //alert(data);
+            $("#btn_upExpirD").trigger("click");
+        }
+    }); */
+
+});
+
+$('.extendBtn').on('click', function() {
+    //alert($(this).attr('value'));
+    invoiceId = $(this).attr('value');
+
+    $.ajax({
+        url : "getdata.php",
+        type: "POST",
+        data : {table: section, id: invoiceId},
+        success: function(data)
+        {
+            setMaterial(data);
+            //alert(data);
+            $("#btn_"+section).trigger("click");
+        }
+    }); 
+
+});
 
 $("#btn_empDelete").on("click", function(){
     //alert($(this).attr("del-val"));
@@ -225,29 +227,6 @@ $("#btn_empDelete").on("click", function(){
                         error: function (jqXHR, textStatus, errorThrown) {
                         } 
                         });
-					  /*
-					  
-					  using $.ajax();
-					  
-					  $.ajax({
-						  
-						  type: 'POST',
-						  url: 'delete.php',
-						  data: 'delete='+pid
-						  
-					  })
-					  .done(function(response){
-						  
-						  bootbox.alert(response);
-						  parent.fadeOut('slow');
-						  
-					  })
-					  .fail(function(){
-						  
-						  bootbox.alert('Something Went Wrog ....');
-						  						  
-					  })
-					  */
 				  }
 				}
 			  }
@@ -283,14 +262,29 @@ $('.profit_form').submit(function(){
 
 function setEmployee(json){
 
-    $('input[name=username]').val(json[0].username);
-    $('input[name=age]').val(json[0].age);
+    $('input[name=firstname]').val(json[0].firstname);
+    $('input[name=lastname]').val(json[0].lastname);
     $('input[name=email]').val(json[0].email);
     $('input[name=phone]').val(json[0].phone);
     $('select[name=role]').val(json[0].role);   
     $('select[name=gender]').val(json[0].gender);
     $('input[name=password]').val(json[0].password);
-    $('select[name=branchId]').val(json[0].branchId);
-    $('.modal-title').text(json[0].username);
+    $('.modal-title').text(json[0].lastname);
 
 }
+
+function setMaterial(json) {
+
+    document.getElementById("fName").textContent = json[0].firstname;
+    document.getElementById("lName").textContent = json[0].lastname;
+    document.getElementById("phone").textContent = json[0].phone;
+    document.getElementById("rd").textContent = json[0].registerNumber;
+    document.getElementById("address").textContent = json[0].address;
+    document.getElementById("materialName").textContent = json[0].name;
+    document.getElementById("number").textContent = json[0].number;
+    document.getElementById("gramm").textContent = json[0].gramm;
+    document.getElementById("carat").textContent = json[0].carat;
+    document.getElementById("sign").textContent = json[0].shinjTemdeg;
+    document.getElementById("anhniiUne").textContent = json[0].anhnii_unelgee;
+    document.getElementById("unelsenEmp").textContent = json[0].empID;
+} 

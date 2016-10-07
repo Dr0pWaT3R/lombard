@@ -93,7 +93,8 @@
     <script>
     $(document).ready(function () {
         //alert('{{message}}');
-        $.notify("{{message}}","success");
+        $.notify("{{message}}","{{notify}}");
+    });
     </script>
     {% endif %}
 {% endblock %}

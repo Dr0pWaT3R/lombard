@@ -23,9 +23,53 @@ $(document).ready(function(){
 
 var compID;
 $('.updateBtn').on('click', function() {
-    alert($(this).attr('value'));
+    //alert($(this).attr('value'));
+    compID = $(this).attr('value');
 
-    $("#btn_upExpirD").trigger("click");
+    $.ajax({
+        url : "getdata.php",
+        type: "POST",
+        data : {table: section, id: compID},
+        success: function(data)
+        {
+            setCompany(data);
+            //alert(data);
+            $("#btn_upExpirD").trigger("click");
+        }
+    });
+
+});
+
+$('#up_compExpiredAt_form').submit(function() {
+
+    var data = {};
+    data['table'] = "company";
+    data['id'] = compID;
+    data['createdAt'] = document.getElementById('newCreatedAt').value;
+    var e = document.getElementById("expire");
+    data['expiredAt'] = e.options[e.selectedIndex].value;
+    //alert(data.toSource());
+
+    $.ajax({
+        url : "update.php",
+        type: "POST",
+        data : data,
+        success: function(data, textStatus, jqXHR)
+        {
+            var result = $.parseJSON(data);
+
+            if (result.success) 
+                alert("Амжилттай"); 
+            else
+                alert("Өөрчлөлт байхгүй"); 
+
+            console.log(result.success);
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+        }
+    });
+    return false;
 });
 
 $('.deleteBtn').on('click', function () {
@@ -71,3 +115,17 @@ $('.deleteBtn').on('click', function () {
     });
 
 });
+
+function setCompany(json) {
+
+    document.getElementById('createdAt').innerHTML = json[0].createdAt;
+    document.getElementById('expiredAt').innerHTML = json[0].expireDate;
+    $('.modal-title').text(json[0].compName);
+    if(json[0].expiredAt == false) {
+        //alert("Хугацаа дуусаагүй байна");
+        $('input[name=newCreatedAt]').val(json[0].expireDate);
+    }else {
+        $('input[name=newCreatedAt]').val(json[0].todayDate);
+    }
+
+}

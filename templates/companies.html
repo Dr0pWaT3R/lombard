@@ -47,7 +47,7 @@
                                                     {{compList.lastname}}</td>
                                                 <td>{{compList.email}}</td>
                                                 <td>{{compList.compPhone}}</td>
-                                                <td>{{compList.userPhone}}</td>
+                                                <td>{{compList.empPhone}}</td>
                                                 <td>{{compList.address}}</td>
                                                 <td>{{compList.createdAt}}</td>
                                                 <td {% if date() > date(compList.expirDate) %}
@@ -95,10 +95,50 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Modal Header</h4>
+                        <p>Компани нэр:</p>
+                        <h4 class="modal-title"></h4>
                     </div>
                     <div class="modal-body">
-                        <p>Some text in the modal.</p>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="widget style1 lazur-bg">
+                                    <div class="row">
+                                        </p>Эхэлсэн хугацаа:</p>
+                                        <span id="createdAt"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="widget style1 yellow-bg">
+                                    <div class="row">
+                                        <p>Дуусах хугацаа:</p>
+                                        <span id="expiredAt"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <form class="m-t" id="up_compExpiredAt_form" role="form" action="?companies" method="POST">
+                                <div class="form-group" >
+                                    <div class="col-ms-6 col-sm-3">
+                                        Хугацаа:
+                                        <select class="form-control m-b" id="expire">
+                                            <option value="3">3 хоног</option>
+                                            <option value="7">7 хоног</option>
+                                            <option value="14">14 хоног</option>
+                                            <option value="30">30 хоног</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" >
+                                    <div class="col-ms-6 col-sm-3">
+                                        Эхлэх огноо:
+                                        <input type="text" class="form-control" name="newCreatedAt" id="newCreatedAt"> 
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-success block full-width m-b">Сунгах</button>
+                            </form>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -125,7 +165,8 @@
     <script>
     $(document).ready(function () {
         //alert('{{message}}');
-        $.notify("{{message}}","success");
+        $.notify("{{message}}","{{notify}}");
+    });
     </script>
     {% endif %}
 {% endblock %}

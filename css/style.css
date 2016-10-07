@@ -3888,11 +3888,11 @@ table.table-mail tr td {
   color: #ffffff;
 }
 .panel-info {
-  border-color: #23c6c8;
+  border-color: #bce8f1;
 }
 .panel-info > .panel-heading {
-  background-color: #23c6c8;
-  border-color: #23c6c8;
+  background-color: #bce8f1;
+  border-color: #bce8f1;
   color: #ffffff;
 }
 .panel-warning {
@@ -3904,10 +3904,10 @@ table.table-mail tr td {
   color: #ffffff;
 }
 .panel-danger {
-  border-color: #ed5565;
+  border-color: #f2dede;
 }
 .panel-danger > .panel-heading {
-  background-color: #ed5565;
+  background-color: #f2dede;
   border-color: #ed5565;
   color: #ffffff;
 }

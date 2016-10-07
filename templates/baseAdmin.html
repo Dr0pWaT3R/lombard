@@ -9,7 +9,7 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
-
+    <link href="css/plugins/datapicker/datepicker3.css" rel="stylesheet">
     <link href="css/plugins/dataTables/datatables.min.css" rel="stylesheet">
     <link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
@@ -46,20 +46,20 @@
                     </div>
                     <li class="nav-home" title="Нүүр">
                         <a href="#">
-                            <i class="fa fa-home"></i> 
+                            <i class="fa fa-tachometer"></i> 
                             <span class="nav-label">Нүүр</span>
                         </a>
                     </li>
-                    <li class="nav-invoice" title="Padaan">
-                        <a href="#">
-                            <i class="fa fa-home"></i> 
-                            <span class="nav-label">Падаан бүртгэх</span>
+                    <li class="nav-material" title="Нүүр">
+                        <a href="?invoiceList">
+                            <i class="fa fa-list-ul"></i> 
+                            <span class="nav-label">Падааны жагсаалт</span>
                         </a>
                     </li>
-                    <li class="nav-" title="Орлого">
-                        <a href="#">
-                            <i class="fa fa-bank"></i> 
-                            <span class="nav-label">Падаан сунгах</span>
+                    <li class="nav-invoiceRegister" title="Padaan">
+                        <a href="?invoiceRegister">
+                            <i class="fa fa-home"></i> 
+                            <span class="nav-label">Падаан бүртгэх</span>
                         </a>
                     </li>
                     <li class="nav-" title="Зардал">
@@ -110,8 +110,8 @@
                     <strong></strong> 
                 </div>
                 <div>
-                    <strong>Copyright</strong> The Lof  &copy;
-                    {{year-1}}-{{year}}
+                    <strong>Copyright</strong> Lombard &copy;
+                    {{year-1}}-{{year | date('Y')}}
                 </div>
             </div>
         </div> 
@@ -124,12 +124,13 @@
     <script src="js/jquery-2.1.1.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="js/plugins/datapicker/bootstrap-datepicker.js"></script>
     <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
     <script src="js/plugins/jeditable/jquery.jeditable.js"></script>
 
 <!-- Custom and plugin javascript -->
     <script src="js/inspinia.js"></script>
-    <script src="js/custom.js"></script>
+    <script src="js/bootbox.min.js"></script>
     <script src="js/plugins/pace/pace.min.js"></script>
     <script src="js/notify.js"></script>
     <script src="js/plugins/dataTables/datatables.min.js"></script>
@@ -140,6 +141,7 @@
             $(".nav-"+section).addClass("active");
         });
     </script>
+    <script src="js/custom.js"></script>
 
     {% endblock %}
 

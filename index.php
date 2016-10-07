@@ -60,13 +60,13 @@
             $password = $_POST['password'];
             $date = date('Y-m-d H:i:s');
 
-            $chckQuery = "SELECT * FROM user WHERE email = '".$email."'";
+            $chckQuery = "SELECT * FROM employee WHERE email = '".$email."'";
             $result = $conn->query($chckQuery);
             if($result->num_rows > 0) {
 
                 $template = $twig->loadTemplate('registerCompany.html');
                 echo $template->render(array('title' => 'Систем админ', 'systemLoged' => $_SESSION['lmAuth'], 
-                    'section' => 'registerComp', 'message' => 'Бүртгэлтэй хэрэглэгч', 'year' => date('Y')));
+                    'section' => 'registerComp', 'notify' => 'warning', 'message' => 'Бүртгэлтэй хэрэглэгч', 'year' => date('Y')));
 
             }else{
 
@@ -77,7 +77,7 @@
                 if($conn->query($query)) {
 
                     $compID = $conn->insert_id;
-                    $query = "INSERT INTO user (firstname, lastname, gender,
+                    $query = "INSERT INTO employee (firstname, lastname, gender,
                         phone, email, role, password, companyID, createdAt,
                         updatedAt) VALUES ('".$firstname."', '".$lastname."',
                         '".$gender."', '".$phone."', '".$email."', '".$role."',
@@ -86,8 +86,8 @@
 
                         $template = $twig->loadTemplate('companies.html');
                         echo $template->render(array('title' => 'Систем админ', 'systemLoged' => $_SESSION['lmAuth'], 
-                            'section' => 'company', 'compList' =>
-                    CompanyList($conn), 'year' => date('Y')));
+                            'section' => 'company', 'notify' => 'success',
+                            'message' => 'Компани бүртгэлээ', 'compList' => CompanyList($conn), 'year' => date('Y')));
                     }
 
                 }
@@ -98,17 +98,84 @@
         }elseif(isset($_GET['employee'])) { 
 
             $array = $_SESSION['lmAuth'];
-            $compID = $array['id'];
+            $compID = $array['compID'];
 
             $template = $twig->loadTemplate('employee.html');
             echo $template->render(array('title' => 'Ломбард Админ', 'systemLoged' => $_SESSION['lmAuth'], 
                 'employeeList' => EmployeeList($conn, $compID), 
                 'section' => 'employee', 'year' => date('Y')));
 
+        }elseif(isset($_GET['invoiceRegister'])) {
+
+            $template = $twig->loadTemplate('invoiceRegister.html');
+            echo $template->render(array('title' => 'Ломбард Админ', 'systemLoged' => $_SESSION['lmAuth'], 
+                'section' => 'invoiceRegister', 'year' => date('Y-m-d')));
+
+
+        }elseif(isset($_GET['invoiceList'])) {
+
+            $array = $_SESSION['lmAuth'];
+            $compID = $array['compID'];
+
+            $template = $twig->loadTemplate('invoiceList.html');
+            echo $template->render(array('title' => 'Ломбард Админ', 'systemLoged' => $_SESSION['lmAuth'], 
+                'invoiceList' => InvoiceList($conn, $compID), 'section' => 'material', 'year' => date('Y')));
+
+        }elseif(isset($_POST['invoiceID'])) {
+
+            $array = $_SESSION['lmAuth'];
+            $compID = $array['compID'];
+            $empID= $array['empId'];
+
+            $fName = $_POST['firstname'];
+            $lName = $_POST['lastname'];
+            $phone = $_POST['phone'];
+            $rd = $_POST['register'];
+            $address = $_POST['address'];
+
+            $invoiceID = $_POST['invoiceID'];
+            $mName = $_POST['materialName'];
+            $number = $_POST['number'];
+            $gramm = $_POST['gramm'];
+            $carat = $_POST['carat'];
+            $sign = $_POST['shinjTemdeg'];
+            $fQuotation = $_POST['anhniiUnelgee'];
+            $mType = $_POST['materialType'];
+            $expiredAt = $_POST['expiredAt'];
+            $interest = $_POST['interest'];
+            $loanMoney = $_POST['loanMoney'];
+            $invPrice = $_POST['invoicePrice'];
+
+            $query = "INSERT INTO client(companyID, firstname, lastname, registerNumber, address, phone, createdAt, updatedAt) 
+                VALUES ('".$compID."', '".$fName."', '".$lName."', '".$rd."', '".$phone."', '".$address."', 
+                '".date('Y-m-d H:i:s')."', '".date('Y-m-d H:i:s')."')";
+            #echo $query;
+
+            if($conn->query($query)) {
+                #echo "end orj irsen shd";
+
+                $clientID = $conn->insert_id;
+                $query = "INSERT INTO material(invoiceID, clientID, empID, companyID, name, number, gramm, carat, 
+                        shinjTemdeg, anhnii_unelgee, materialType, interest, loanMoney, invoicePrice, mode, 
+                        expiredAt, createdAt, updatedAt) VALUES('".$invoiceID."', '".$clientID."', '".$empID."', '".$compID."', '".$mName."',
+                        '".$number."', '".$gramm."', '".$carat."', '".$sign."', '".$fQuotation."', '".$mType."', '".$interest."',
+                        '".$loanMoney."', '".$invPrice."', '1', '".$expiredAt."', '".date('Y-m-d H:i:s')."', '".date('Y-m-d H:i:s')."')";
+                #echo $query;
+
+                if($conn->query($query)) {
+
+                    $template = $twig->loadTemplate('invoiceList.html');
+                    echo $template->render(array('title' => 'Ломбард Админ', 'systemLoged' => $_SESSION['lmAuth'], 
+                        'invoiceList' => InvoiceList($conn, $compID), 'section' => 'invoiceList', 'year' => date('Y')));
+
+                }
+
+            }
+
         }elseif(isset($_POST['email'])) {
 
             $array = $_SESSION['lmAuth'];
-            $compID = $array['id'];
+            $compID = $array['compID'];
             $fName = $_POST['firstname'];
             $lName = $_POST['lastname'];
             $gender = $_POST['gender'];
@@ -118,18 +185,28 @@
             $pass = $_POST['password'];
             $date = date('Y-m-d H:i:s');
 
-            $query = "INSERT INTO user(firstname, lastname, gender, phone,
+            $query = "INSERT INTO employee (firstname, lastname, gender, phone,
                 email, role, password, companyID, createdAt, updatedAt) VALUES
                 ('".$fName."', '".$lName."', '".$gender."', '".$phone."',
                 '".$email."', '".$role."', '".$pass."', '".$compID."',
                 '".$date."', '".$date."')";
 
             if($conn->query($query)){
+
                 $template = $twig->loadTemplate('employee.html');
                 echo $template->render(array('title' => 'Ломбард Админ',
-                    'employeeList' => EmployeeList($conn, $compID),
+                    'employeeList' => EmployeeList($conn, $compID), 'notify' => 'success',
                     'message' => 'Ажилтан бүртгэлээ', 'systemLoged' => $_SESSION['lmAuth'], 
                     'section' => 'employee', 'year' => date('Y')));
+
+            }else{
+
+                $template = $twig->loadTemplate('employee.html');
+                echo $template->render(array('title' => 'Ломбард Админ',
+                    'employeeList' => EmployeeList($conn, $compID), 'notify' => 'warning',
+                    'message' => 'email бүртгэлтэй байна', 'systemLoged' => $_SESSION['lmAuth'], 
+                    'section' => 'employee', 'year' => date('Y')));
+
             }
         #email request end
         } 
@@ -172,7 +249,8 @@
 
             }elseif(true){
 
-                $query = "SELECT company.id, user.email, user.role FROM company LEFT JOIN user ON company.id=user.companyID 
+                $query = "SELECT employee.id AS empId, company.id AS compID, employee.email, employee.role 
+                    FROM company LEFT JOIN employee ON company.id=employee.companyID 
                     WHERE company.expirDate > CURDATE() AND email='".$email."' AND password='".$password."'";
                 $result = $conn->query($query);
                 if($result->num_rows > 0) {
@@ -189,6 +267,7 @@
 
                     }else{
                         #ajiltan template hewleh
+                        echo "ajiltan template";
                     }
 
                 }else {

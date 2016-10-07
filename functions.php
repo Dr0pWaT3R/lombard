@@ -3,11 +3,10 @@
 $compList = array();
 function CompanyList($conn) {
 
-    $lstQuery = "SELECT company.id, company.name, company.phone AS compPhone, company.address, 
-        company.createdAt, company.expirDate, company.updatedAt, 
-        user.firstname, user.lastname, user.phone AS userPhone, user.gender, user.email, user.password 
-        FROM `user` LEFT JOIN company on company.id =
-        user.companyID AND user.role = 'admin'";
+    $lstQuery = "SELECT company.id, company.name, email, company.phone AS compPhone, 
+        company.address, company.createdAt, company.expirDate, company.updatedAt, 
+        employee.firstname, employee.lastname, employee.phone AS empPhone, employee.role FROM `employee` 
+        LEFT JOIN company on company.id = employee.companyID WHERE employee.role = 'admin'";
     $result = $conn->query($lstQuery);
 
     while($row = $result->fetch_assoc()){
@@ -21,7 +20,7 @@ function CompanyList($conn) {
 $empList = array();
 function EmployeeList($conn, $compID) {
 
-    $query = "SELECT * FROM user WHERE companyID = '".$compID."'";
+    $query = "SELECT * FROM employee WHERE companyID = '".$compID."'";
     $result = $conn->query($query);
     while($row = $result->fetch_assoc()){
         $empList[] = $row;
@@ -31,10 +30,18 @@ function EmployeeList($conn, $compID) {
     
 }
 
-$compInfo = array();
-function CompanyInfo($conn){
+$invoiceList = array();
+function InvoiceList($conn, $compID){
 
-    #$query = "SELECT user.email, user.role FROM company LEFT JOIN user ON company.id=user.companyID 
-    #                WHERE company.expirDate > CURDATE() AND email='".$email."' AND password='".$password."'";
+    $query = "SELECT client.firstname, client.lastname, client.phone, material.id, 
+        material.invoiceID, material.name, material.number, material.loanMoney, material.createdAt, material.expiredAt 
+        FROM client LEFT JOIN material ON client.id=material.clientID WHERE material.companyID = '".$compID."'";
+
+    $result = $conn->query($query);
+    while($row = $result->fetch_assoc()) {
+        $invoiceList[] = $row;
+    }
+    
+    return $invoiceList;
 
 }
