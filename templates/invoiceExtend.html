@@ -1,7 +1,7 @@
+
 <div class="modal inmodal" id="{{section}}_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content animated flipInY">
-            <form id="" method="POST" role="form" action="?">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">
                         <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -14,11 +14,28 @@
                                 <div class="panel panel-info">
                                     <div class="panel-heading">Үйлчлүүлэгчийн мэдээлэл</div>
                                     <div class="panel-body">
-                                     <h5>Овог:<span id="fName" class="label label-info"></span></h5>   
-                                     <h5>Нэр:<span id="lName" class="label label-info"></span></h5>   
-                                     <h5>Утас:<span id="phone" class="label label-default"></span></h5>   
-                                     <h5>РД:<span id="rd" class="label label-default"></span></h5>   
-                                     <h5>Хаяг:<span id="address" class="label label-default"></span></h5>   
+                                        <div class="wrapper">
+                                            <div class="row">
+                                                <div class="col-xs-6 col-md-6"><h5>Овог:</h5></div>
+                                                <div class="col-xs-6 col-md-6"><span id="fName" class="label label-info"></span></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-6 col-md-6"><h5>Нэр:</h5></div>
+                                                <div class="col-xs-6 col-md-6"><span id="lName" class="label label-info"></span></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-6 col-md-6"><h5>Утас:</h5></div>
+                                                <div class="col-xs-6 col-md-6"><span id="phone" class="label label-default"></span></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-6 col-md-6"><h5>РД:</h5></div>
+                                                <div class="col-xs-6 col-md-6"><span id="rd" class="label label-default"></span></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-6 col-md-6"><h5>Хаяг:</h5></div>
+                                                <div class="col-xs-6 col-md-6"><span id="address" class="label label-default"></span></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -33,6 +50,13 @@
                                                     <h5>Барьцааны нэр:</h5>   
                                                 </div>
                                                 <div class="col-xs-6 col-md-6"><span id="materialName" class="label label-info"></span></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-6 col-md-6">
+                                                    <h5>Падааны дугаар:</h5>   
+                                                </div>
+                                                <div class="col-xs-6
+                                                    col-md-6"><span id="materialId" class="label label-info"></span></div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-xs-6 col-md-6"><h5>Тоо/ш:</h5></div>
@@ -58,6 +82,12 @@
                                                 <div class="col-xs-6 col-md-6"><h5>Үнэлсэн мэргэжилтэн:</h5></div>
                                                 <div class="col-xs-6 col-md-6"><span id="unelsenEmp" class="label label-default"></span></div>
                                             </div>
+                                            <div class="row">
+                                                <div class="col-xs-6 col-md-6"><h5>Падааны мөнгө:</h5></div>
+                                                <div class="col-xs-6 col-md-6">
+                                                    <span id="extendInvoice" class="label label-warning"></span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -71,11 +101,79 @@
                                     <div class="panel-body">
                                         <div class="wrapper">
                                             <div class="row">
-                                                <div class="col-xs-6 col-md-6">.col-xs-6 .col-md-4</div>
-                                                <div class="col-xs-6 col-md-6">.col-xs-6 .col-md-4</div>
+                                                <div class="col-xs-6 col-md-6"><h5>Авсан огноо:</h5></div>
+                                                <div class="col-xs-6 col-md-6">
+                                                    <input type="text" class="form-control extendInput" name="extendCreatedAt" placeholder="Авсан огноо">
+                                                </div>
                                             </div>
-                                        </div> <!--wrapper end -->
-                                    </div>
+                                            <div class="row">
+                                                <div class="col-xs-6 col-md-6"><h5>Дуусах огноо:</h5></div>
+                                                <div class="col-xs-6 col-md-6">
+                                                    <input type="text" class="form-control extendInput" name="extendExpiredAt" placeholder="Авсан огноо">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6 col-md-6"><h5>Хүү:</h5></div>
+                                            <div class="col-xs-6 col-md-6">
+                                                <input type="number" step="any" class="form-control extendInput"
+                                                                                name="extendInterest" id="originInterest">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6 col-md-6"><h5>Хугацаа:</h5></div>
+                                            <div class="col-xs-6 col-md-6">
+                                                <input type="number"
+                                                       step="any" class="form-control
+                                                       extendInput"
+                                                                  name="extendUsedTime">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6 col-md-6"><h5>Хэтэрсэн хоног:</h5></div>
+                                            <div class="col-xs-6
+                                            col-md-6"><span
+                                                 id="extendExpiredDay"
+                                                 class="label
+                                                 label-danger">1</span></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6
+                                            col-md-6"><h5 id="myP">Нэг өдрийн хүүний %:</h5></div>
+                                            <div class="col-xs-6 col-md-6">
+                                                <input type="number" step="any" class="form-control extendInput" id="extendInterest" placeholder="Хүү">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6 col-md-6"><h5>Торгууль:</h5></div>
+                                            <div class="col-xs-6 col-md-6">
+                                                <input type="number" step="any" class="form-control extendInput" id="extendTorguuli">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6 col-md-6"><h5>Зээлсэн мөнгө:</h5></div>
+                                            <div class="col-xs-6 col-md-6">
+                                                <input type="number"
+                                                       class="form-control
+                                                       extendInput"
+                                                       id="extendLoanMoney" name="extendLoanMoney">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-12">
+                                                <form name="uildelForm" action="">
+                                                    <select  name="optionList"
+                                                             onchange="handleSelect(this.form)">
+                                                        <option value="1">Сунгах</option>
+                                                        <option value="2">Мөнгө нэмж авах</option>
+                                                        <option value="3">Зээлийн мөнгөнөөс хасах</option>
+                                                        <option value="4">Зээлийг төлөх</option>
+                                                        <option value="5">Ломбард зарлагадах</option>
+                                                    </select>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div> <!--wrapper end -->
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -83,26 +181,130 @@
                                 <div class="panel panel-danger">
                                     <div class="panel-heading">Panel heading without title</div>
                                     <div class="panel-body">
-                                        <div class="wrapper">
-                                            <div class="row">
-                                                <div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
-                                                <div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
-                                                <div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
-                                            </div>
+                                        <div id="demo" class="wrapper">
                                         </div> <!--wrapper end -->
                                     </div>
                                 </div>
                                 <!-- panel end-->
                             </div>
-                        </div> <!-- row end-->
-                    </div>
-                </div> <!-- modal body end -->
-                <div class="clearfix visible-xs"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" del-val="1" id="btn_empDelete">Устгах</button>
-                    <button type="submit" class="btn btn-primary">Илгээх</button>
+                        </div>
+                    </div> <!-- row end-->
                 </div>
-            </form>
-        </div>
+        </div> <!-- modal body end -->
     </div>
 </div>
+<script>
+function handleSelect(e) {
+    var x = e.optionList;
+    if(x.value == 1) {
+
+    }else if(x.value == 2) {
+    }else if(x.value == 3) {
+
+        document.getElementById("demo").innerHTML = "<div class='row'> <div class='col-xs-6 col-md-4'></div> <div class='col-xs-6 col-md-4'>.col-xs-6 .col-md-4</div> <div class='col-xs-6 col-md-4'>.col-xs-6 .col-md-4</div> </div> ";
+        
+
+    }else if(x.value == 4) {
+
+        var invoiceId = document.getElementById('materialId').innerHTML; 
+
+        var loanMoney = parseInt($('#extendLoanMoney').val());
+        var originInterest = $('#originInterest').val();
+        var interestMoney = Math.round(loanMoney * originInterest / 100);
+        var torguuliValue;
+        if($('#extendTorguuli').val() != ''){
+            torguuliValue = $('#extendTorguuli').val();
+        }else{
+            torguuliValue = 0;
+        }
+        var totalValue = loanMoney + interestMoney + parseInt(torguuliValue);
+
+        var invoice = document.getElementById('extendInvoice').innerHTML;
+        //if($('#extendTorguuli').val() != ''){
+            if(invoice == 'Төлөөгүй') {
+                var totalValue = parseInt(totalValue) + 100;
+
+                document.getElementById("demo").innerHTML = "<form id='up_Invoice_Form' role='form' method='POST' action='?toTender'>"+ 
+                    "<div class='row'><div class='col-xs-6 col-md-6'><h5>Зээлсэн мөнгө:</h5></div> " +
+                    "<div class='col-xs-6 col-md-6'> <span id='' class='label label-danger'>" 
+                    + loanMoney + "₮"+ "</span> </div> </div><div class='row'>" +  
+                    "<div class='col-xs-6 col-md-6'><h5>Хүүний мөнгө:</h5></div> " +
+                    "<div class='col-xs-6 col-md-6'> <span id='extentInterestMoney' class='label label-danger'>" 
+                    + interestMoney + "₮"+
+                    "</span> </div> </div><div class='row'>" +  
+                    "<div class='col-xs-6 col-md-6'><h5>Торгуулийн мөнгө:</h5></div> " +
+                    "<div class='col-xs-6 col-md-6'> <span id='' class='label label-danger'>" 
+                    + torguuliValue + "₮"+ "</span> </div> </div><div class='row'> <div class='col-xs-6 col-md-6'><h5>Падааны үнэ:</h5></div>" + 
+                    "<div class='col-xs-6 col-md-6'> <span id='' class='label label-danger'>" +100 +"₮" + 
+                    "</span> </div> </div><div class='row'> <div class='col-xs-6 col-md-6'> <h5>Нийт төлөх:</h5> </div> " +
+                    "<div class='col-xs-6 col-md-6'> <span id='' class='label label-success'>" +totalValue +"₮" + 
+                    "</span> </div> </div><input type='hidden' class='form-control extendInput' name='value' value='Зээл төлсөн'>"+
+                    "<input type='hidden' class='form-control extendInput' name='invoiceId' value='"+invoiceId+"'>"+
+                    "<input type='hidden' class='form-control extendInput' name='type' value='Орлого' >"+
+                    "<input type='hidden' class='form-control extendInput' name='money' value='"+totalValue+"'>"+
+                    "<button type='submit' class='btn btn-primary'>Илгээх</button></form>";
+            }else{
+                document.getElementById("demo").innerHTML = " <div class='row'>" +  
+                    "<div class='col-xs-6 col-md-6'><h5>Хүүний мөнгө:</h5></div> " +
+                    "<div class='col-xs-6 col-md-6'> <span id='extentInterestMoney' class='label label-danger'>" + interestMoney + 
+                    "</span> </div> </div>";
+            }
+
+        /*}else{
+            location.reload();
+            alert('toruuli tootsono uu');
+        }*/
+
+   }else {
+
+         var invoiceId = document.getElementById('materialId').innerHTML; 
+
+        var loanMoney = parseInt($('#extendLoanMoney').val());
+        var originInterest = $('#originInterest').val();
+        var interestMoney = Math.round(loanMoney * originInterest / 100);
+        var torguuliValue;
+        if($('#extendTorguuli').val() != ''){
+            torguuliValue = $('#extendTorguuli').val();
+        }else{
+            torguuliValue = 0;
+        }
+        var totalValue = loanMoney + interestMoney + parseInt(torguuliValue);
+
+        var invoice = document.getElementById('extendInvoice').innerHTML;
+        //if($('#extendTorguuli').val() != ''){
+            if(invoice == 'Төлөөгүй') {
+                var totalValue = parseInt(totalValue) + 100;
+
+                document.getElementById("demo").innerHTML = "<form id='up_Invoice_Form' role='form' method='POST' action='?lombardZarah'>"+ 
+                    "<div class='row'><div class='col-xs-6 col-md-6'><h5>Зээлсэн мөнгө:</h5></div> " +
+                    "<div class='col-xs-6 col-md-6'> <span id='' class='label label-danger'>" 
+                    + loanMoney + "₮"+ "</span> </div> </div><div class='row'>" +  
+                    "<div class='col-xs-6 col-md-6'><h5>Хүүний мөнгө:</h5></div> " +
+                    "<div class='col-xs-6 col-md-6'> <span id='extentInterestMoney' class='label label-danger'>" 
+                    + interestMoney + "₮"+
+                    "</span> </div> </div><div class='row'>" +  
+                    "<div class='col-xs-6 col-md-6'><h5>Торгуулийн мөнгө:</h5></div> " +
+                    "<div class='col-xs-6 col-md-6'> <span id='' class='label label-danger'>" 
+                    + torguuliValue + "₮"+ "</span> </div> </div><div class='row'> <div class='col-xs-6 col-md-6'><h5>Падааны үнэ:</h5></div>" + 
+                    "<div class='col-xs-6 col-md-6'> <span id='' class='label label-danger'>" +100 +"₮" + 
+                    "</span> </div> </div><div class='row'> <div class='col-xs-6 col-md-6'> <h5>Нийт төлөх:</h5> </div> " +
+                    "<div class='col-xs-6 col-md-6'> <span id='' class='label label-success'>" +totalValue +"₮" + 
+                    "</span> </div> </div><input type='hidden' class='form-control extendInput' name='value' value='Зээл төлсөн'>"+
+                    "<input type='hidden' class='form-control extendInput' name='invoiceId' value='"+invoiceId+"'>"+
+                    "<input type='hidden' class='form-control extendInput' name='type' value='Орлого' >"+
+                    "<input type='hidden' class='form-control extendInput' name='money' value='"+totalValue+"'>"+
+                    "<button type='submit' class='btn btn-primary'>Зарлагадах</button></form>";
+            }else{
+                document.getElementById("demo").innerHTML = " <div class='row'>" +  
+                    "<div class='col-xs-6 col-md-6'><h5>Хүүний мөнгө:</h5></div> " +
+                    "<div class='col-xs-6 col-md-6'> <span id='extentInterestMoney' class='label label-danger'>" + interestMoney + 
+                    "</span> </div> </div>";
+            }
+
+        /*}else{
+            location.reload();
+            alert('toruuli tootsono uu');
+        }*/
+    } 
+}
+</script>

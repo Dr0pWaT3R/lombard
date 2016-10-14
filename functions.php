@@ -9,11 +9,13 @@ function CompanyList($conn) {
         LEFT JOIN company on company.id = employee.companyID WHERE employee.role = 'admin'";
     $result = $conn->query($lstQuery);
 
-    while($row = $result->fetch_assoc()){
-        $compList[] = $row;
-    }
+    if($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()){
+            $compList[] = $row;
+        }
 
-    return $compList;
+        return $compList;
+    }
 
 }
 
@@ -22,11 +24,15 @@ function EmployeeList($conn, $compID) {
 
     $query = "SELECT * FROM employee WHERE companyID = '".$compID."'";
     $result = $conn->query($query);
-    while($row = $result->fetch_assoc()){
-        $empList[] = $row;
-    }
+    
+    if($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()){
+            $empList[] = $row;
+        }
 
-    return $empList;
+        return $empList;
+
+    }
     
 }
 
@@ -38,10 +44,15 @@ function InvoiceList($conn, $compID){
         FROM client LEFT JOIN material ON client.id=material.clientID WHERE material.companyID = '".$compID."'";
 
     $result = $conn->query($query);
-    while($row = $result->fetch_assoc()) {
-        $invoiceList[] = $row;
+    if($result->num_rows > 0) {
+
+        while($row = $result->fetch_assoc()) {
+            $invoiceList[] = $row;
+        }
+
+        return $invoiceList;
+
     }
     
-    return $invoiceList;
 
 }

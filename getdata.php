@@ -62,9 +62,12 @@
 
             if($table == 'material') {
 
-                $query = "SELECT client.firstname, client.lastname, client.phone, client.registerNumber, client.address, material.name,
-                            material.number, material.gramm, material.carat, material.shinjTemdeg, material.anhnii_unelgee, 
-                            material.interest, material.empID FROM material LEFT JOIN client ON
+                $query = "SELECT material.id, client.firstname, client.lastname, client.phone, client.registerNumber, client.address, material.name,
+                            material.number, material.gramm, material.carat, material.shinjTemdeg, material.anhnii_unelgee, material.loanMoney, 
+                            material.interest, material.createdAt, material.expiredAt, (SELECT lastname FROM employee WHERE id=(SELECT empID FROM
+                            material WHERE id ='2')) AS empID,
+                            (SELECT TO_DAYS(material.expiredAt) - TO_DAYS(material.createdAt)) AS usedTime, invoicePrice,
+                            (SELECT TO_DAYS(CURDATE())- TO_DAYS(material.expiredAt)) AS expiredDay FROM material LEFT JOIN client ON
                             client.id=material.clientID WHERE material.id = '".$id."'";
                 #echo $query;
 

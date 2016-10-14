@@ -37,6 +37,30 @@
             echo $template->render(array('title' => 'Систем админ', 'systemLoged' => $_SESSION['lmAuth'], 
                 'section' => 'registerComp', 'year' => date('Y')));
 
+        }elseif(isset($_GET['toTender'])){
+
+            $array = $_SESSION['lmAuth'];
+            $compID = $array['compID'];
+            $value = $_POST['value'];
+            $invoiceId = $_POST['invoiceId'];
+            $type = $_POST['type'];
+            $money = $_POST['money'];
+            $date = date('Y-m-d H:i:s');
+
+            $query = "UPDATE material SET mode='0', invoicePrice = '1', updatedAt='".$date."' WHERE id='".$invoiceId."'";
+            if($conn->query($query)){
+                $query = "INSERT INTO transaction (companyID, value, type, date, invoiceID, money, notepad) 
+                    VALUES('".$compID."', '".$value."', '".$type."', '".$date."', '".$invoiceId."', '".$money."', '')";
+                if($conn->query($query)){
+
+                    $template = $twig->loadTemplate('invoiceList.html');
+                    echo $template->render(array('title' => 'Ломбард Админ', 'systemLoged' => $_SESSION['lmAuth'], 
+                        'invoiceList' => InvoiceList($conn, $compID), 'section' => 'material', 'year' => date('Y')));
+
+                }
+            }
+
+
         }elseif(isset($_GET['companies'])){
             
             $template = $twig->loadTemplate('companies.html');

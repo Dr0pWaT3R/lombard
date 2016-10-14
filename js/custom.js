@@ -19,6 +19,15 @@ $(document).ready(function(){
     ]
 
     });
+    $('#extendInterest').keyup(function(event) {
+        //alert("ajilt bn");
+        var loanMoney = parseInt($('#extendLoanMoney').val()); 
+        var interest = $('#extendInterest').val();
+        var torguuli = Math.round(loanMoney * interest / 100);
+        var expiredDay = document.getElementById('extendExpiredDay').innerHTML; 
+        //
+        $('#extendTorguuli').val(torguuli * expiredDay);
+    });
 });
 
 var invoiceId;
@@ -260,6 +269,7 @@ $('.profit_form').submit(function(){
     //return false;
 });
 
+
 function setEmployee(json){
 
     $('input[name=firstname]').val(json[0].firstname);
@@ -275,16 +285,35 @@ function setEmployee(json){
 
 function setMaterial(json) {
 
+    $('input[name=extendCreatedAt]').val(json[0].createdAt);
+    $('input[name=extendExpiredAt]').val(json[0].expiredAt);
+    $('input[name=extendInterest]').val(json[0].interest);
+    $('input[name=extendLoanMoney]').val(json[0].loanMoney);
+    $('input[name=extendUsedTime]').val(json[0].usedTime);
+    if(json[0].expiredDay > 0){
+        document.getElementById("extendExpiredDay").textContent = json[0].expiredDay;
+    }else{
+        document.getElementById("extendExpiredDay").textContent = 'Хугацаа хэтрээгүй';
+        $('#extendInterest').attr('readonly', true);
+        $('#extendTorguuli').attr('readonly', true);
+    }
     document.getElementById("fName").textContent = json[0].firstname;
     document.getElementById("lName").textContent = json[0].lastname;
     document.getElementById("phone").textContent = json[0].phone;
     document.getElementById("rd").textContent = json[0].registerNumber;
     document.getElementById("address").textContent = json[0].address;
     document.getElementById("materialName").textContent = json[0].name;
+    document.getElementById("materialId").textContent = json[0].id;
     document.getElementById("number").textContent = json[0].number;
     document.getElementById("gramm").textContent = json[0].gramm;
     document.getElementById("carat").textContent = json[0].carat;
     document.getElementById("sign").textContent = json[0].shinjTemdeg;
     document.getElementById("anhniiUne").textContent = json[0].anhnii_unelgee;
     document.getElementById("unelsenEmp").textContent = json[0].empID;
+    if(json[0].invoicePrice == 1) {
+        document.getElementById("extendInvoice").textContent = 'Төлсөн';
+    }else{
+        document.getElementById("extendInvoice").textContent = 'Төлөөгүй';
+    }
 } 
+
