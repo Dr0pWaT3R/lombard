@@ -39,7 +39,7 @@ function EmployeeList($conn, $compID) {
 $invoiceList = array();
 function InvoiceList($conn, $compID){
 
-    $query = "SELECT client.firstname, client.lastname, client.phone, material.id, 
+    $query = "SELECT client.firstname, client.lastname, client.phone, material.id, material.clientID, material.mode,
         material.invoiceID, material.name, material.number, material.loanMoney, material.createdAt, material.expiredAt 
         FROM client LEFT JOIN material ON client.id=material.clientID WHERE material.companyID = '".$compID."'";
 

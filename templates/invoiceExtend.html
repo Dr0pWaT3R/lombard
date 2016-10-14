@@ -164,6 +164,7 @@
                                                 <form name="uildelForm" action="">
                                                     <select  name="optionList"
                                                              onchange="handleSelect(this.form)">
+                                                        <option selected disabled>Сонго</option>
                                                         <option value="1">Сунгах</option>
                                                         <option value="2">Мөнгө нэмж авах</option>
                                                         <option value="3">Зээлийн мөнгөнөөс хасах</option>
@@ -198,6 +199,64 @@ function handleSelect(e) {
     var x = e.optionList;
     if(x.value == 1) {
 
+        var invoiceId = document.getElementById('materialId').innerHTML; 
+
+        var loanMoney = parseInt($('#extendLoanMoney').val());
+        var originInterest = $('#originInterest').val();
+        var interestMoney = Math.round(loanMoney * originInterest / 100);
+        var torguuliValue;
+        if($('#extendTorguuli').val() != ''){
+            torguuliValue = $('#extendTorguuli').val();
+        }else{
+            torguuliValue = 0;
+        }
+        var totalValue = interestMoney + parseInt(torguuliValue);
+
+        var invoice = document.getElementById('extendInvoice').innerHTML;
+        if(invoice == 'Төлөөгүй') {
+            var totalValue = parseInt(totalValue) + 100;
+
+            document.getElementById("demo").innerHTML = "<form id='up_Invoice_Form' role='form' method='POST' action='?toTenderAndZarlagadah'>"+ 
+                "<div class='row'><div class='col-xs-6 col-md-6'><h5>Зээлсэн мөнгө:</h5></div> " +
+                "<div class='col-xs-6 col-md-6'> <span id='' class='label label-danger'>" 
+                + loanMoney + "₮"+ "</span> </div> </div><div class='row'>" +  
+                "<div class='col-xs-6 col-md-6'><h5>Хүүний мөнгө:</h5></div> " +
+                "<div class='col-xs-6 col-md-6'> <span id='extentInterestMoney' class='label label-danger'>" 
+                + interestMoney + "₮"+
+                "</span> </div> </div><div class='row'>" +  
+                "<div class='col-xs-6 col-md-6'><h5>Торгуулийн мөнгө:</h5></div> " +
+                "<div class='col-xs-6 col-md-6'> <span id='' class='label label-danger'>" 
+                + torguuliValue + "₮"+ "</span> </div> </div><div class='row'> <div class='col-xs-6 col-md-6'><h5>Падааны үнэ:</h5></div>" + 
+                "<div class='col-xs-6 col-md-6'> <span id='' class='label label-danger'>" +100 +"₮" + 
+                "</span> </div> </div><div class='row'> <div class='col-xs-6 col-md-6'> <h5>Нийт төлөх:</h5> </div> " +
+                "<div class='col-xs-6 col-md-6'> <span id='' class='label label-success'>" +totalValue +"₮" + 
+                "</span> </div> </div><input type='hidden' class='form-control extendInput' name='value' value='Зээл төлсөн'>"+
+                "<input type='hidden' class='form-control extendInput' name='invoiceId' value='"+invoiceId+"'>"+
+                "<input type='hidden' class='form-control extendInput' name='type' value='Орлого' >"+
+                "<input type='hidden' class='form-control extendInput' name='money' value='"+totalValue+"'>"+
+                "<button type='submit' class='btn btn-primary'>Сунгах</button></form>";
+        }else{
+
+            document.getElementById("demo").innerHTML = "<form id='up_Invoice_Form' role='form' method='POST' action='?toTenderAndZarlagadah'>"+ 
+                "<div class='row'><div class='col-xs-6 col-md-6'><h5>Зээлсэн мөнгө:</h5></div> " +
+                "<div class='col-xs-6 col-md-6'> <span id='' class='label label-danger'>" 
+                + loanMoney + "₮"+ "</span> </div> </div><div class='row'>" +  
+                "<div class='col-xs-6 col-md-6'><h5>Хүүний мөнгө:</h5></div> " +
+                "<div class='col-xs-6 col-md-6'> <span id='extentInterestMoney' class='label label-danger'>" 
+                + interestMoney + "₮"+
+                "</span> </div> </div><div class='row'>" +  
+                "<div class='col-xs-6 col-md-6'><h5>Торгуулийн мөнгө:</h5></div> " +
+                "<div class='col-xs-6 col-md-6'> <span id='' class='label label-danger'>" 
+                + torguuliValue + "₮"+ "</span> </div> </div><div class='row'> <div class='col-xs-6 col-md-6'> <h5>Нийт төлөх:</h5> </div> " +
+                "<div class='col-xs-6 col-md-6'> <span id='' class='label label-success'>" +totalValue +"₮" + 
+                "</span> </div> </div><input type='hidden' class='form-control extendInput' name='value' value='Зээл төлсөн'>"+
+                "<input type='hidden' class='form-control extendInput' name='invoiceId' value='"+invoiceId+"'>"+
+                "<input type='hidden' class='form-control extendInput' name='type' value='Орлого' >"+
+                "<input type='hidden' class='form-control extendInput' name='money' value='"+totalValue+"'>"+
+                "<button type='submit' class='btn btn-primary'>Сунгах</button></form>";
+
+        }
+
     }else if(x.value == 2) {
     }else if(x.value == 3) {
 
@@ -224,7 +283,7 @@ function handleSelect(e) {
             if(invoice == 'Төлөөгүй') {
                 var totalValue = parseInt(totalValue) + 100;
 
-                document.getElementById("demo").innerHTML = "<form id='up_Invoice_Form' role='form' method='POST' action='?toTender'>"+ 
+                document.getElementById("demo").innerHTML = "<form id='up_Invoice_Form' role='form' method='POST' action='?toTenderAndZarlagadah'>"+ 
                     "<div class='row'><div class='col-xs-6 col-md-6'><h5>Зээлсэн мөнгө:</h5></div> " +
                     "<div class='col-xs-6 col-md-6'> <span id='' class='label label-danger'>" 
                     + loanMoney + "₮"+ "</span> </div> </div><div class='row'>" +  
@@ -242,12 +301,27 @@ function handleSelect(e) {
                     "<input type='hidden' class='form-control extendInput' name='invoiceId' value='"+invoiceId+"'>"+
                     "<input type='hidden' class='form-control extendInput' name='type' value='Орлого' >"+
                     "<input type='hidden' class='form-control extendInput' name='money' value='"+totalValue+"'>"+
-                    "<button type='submit' class='btn btn-primary'>Илгээх</button></form>";
+                    "<button type='submit' class='btn btn-primary'>Зээл төлөх</button></form>";
             }else{
-                document.getElementById("demo").innerHTML = " <div class='row'>" +  
+
+                document.getElementById("demo").innerHTML = "<form id='up_Invoice_Form' role='form' method='POST' action='?toTenderAndZarlagadah'>"+ 
+                    "<div class='row'><div class='col-xs-6 col-md-6'><h5>Зээлсэн мөнгө:</h5></div> " +
+                    "<div class='col-xs-6 col-md-6'> <span id='' class='label label-danger'>" 
+                    + loanMoney + "₮"+ "</span> </div> </div><div class='row'>" +  
                     "<div class='col-xs-6 col-md-6'><h5>Хүүний мөнгө:</h5></div> " +
-                    "<div class='col-xs-6 col-md-6'> <span id='extentInterestMoney' class='label label-danger'>" + interestMoney + 
-                    "</span> </div> </div>";
+                    "<div class='col-xs-6 col-md-6'> <span id='extentInterestMoney' class='label label-danger'>" 
+                    + interestMoney + "₮"+
+                    "</span> </div> </div><div class='row'>" +  
+                    "<div class='col-xs-6 col-md-6'><h5>Торгуулийн мөнгө:</h5></div> " +
+                    "<div class='col-xs-6 col-md-6'> <span id='' class='label label-danger'>" 
+                    + torguuliValue + "₮"+ "</span> </div> </div><div class='row'> <div class='col-xs-6 col-md-6'> <h5>Нийт төлөх:</h5> </div> " +
+                    "<div class='col-xs-6 col-md-6'> <span id='' class='label label-success'>" +totalValue +"₮" + 
+                    "</span> </div> </div><input type='hidden' class='form-control extendInput' name='value' value='Зээл төлсөн'>"+
+                    "<input type='hidden' class='form-control extendInput' name='invoiceId' value='"+invoiceId+"'>"+
+                    "<input type='hidden' class='form-control extendInput' name='type' value='Орлого' >"+
+                    "<input type='hidden' class='form-control extendInput' name='money' value='"+totalValue+"'>"+
+                    "<button type='submit' class='btn btn-primary'>Зээл төлөх</button></form>";
+
             }
 
         /*}else{
@@ -255,7 +329,7 @@ function handleSelect(e) {
             alert('toruuli tootsono uu');
         }*/
 
-   }else {
+   }else if(x.value == 5) {
 
          var invoiceId = document.getElementById('materialId').innerHTML; 
 
@@ -271,40 +345,50 @@ function handleSelect(e) {
         var totalValue = loanMoney + interestMoney + parseInt(torguuliValue);
 
         var invoice = document.getElementById('extendInvoice').innerHTML;
-        //if($('#extendTorguuli').val() != ''){
-            if(invoice == 'Төлөөгүй') {
-                var totalValue = parseInt(totalValue) + 100;
+        if(invoice == 'Төлөөгүй') {
+            var totalValue = parseInt(totalValue) + 100;
 
-                document.getElementById("demo").innerHTML = "<form id='up_Invoice_Form' role='form' method='POST' action='?lombardZarah'>"+ 
-                    "<div class='row'><div class='col-xs-6 col-md-6'><h5>Зээлсэн мөнгө:</h5></div> " +
-                    "<div class='col-xs-6 col-md-6'> <span id='' class='label label-danger'>" 
-                    + loanMoney + "₮"+ "</span> </div> </div><div class='row'>" +  
-                    "<div class='col-xs-6 col-md-6'><h5>Хүүний мөнгө:</h5></div> " +
-                    "<div class='col-xs-6 col-md-6'> <span id='extentInterestMoney' class='label label-danger'>" 
-                    + interestMoney + "₮"+
-                    "</span> </div> </div><div class='row'>" +  
-                    "<div class='col-xs-6 col-md-6'><h5>Торгуулийн мөнгө:</h5></div> " +
-                    "<div class='col-xs-6 col-md-6'> <span id='' class='label label-danger'>" 
-                    + torguuliValue + "₮"+ "</span> </div> </div><div class='row'> <div class='col-xs-6 col-md-6'><h5>Падааны үнэ:</h5></div>" + 
-                    "<div class='col-xs-6 col-md-6'> <span id='' class='label label-danger'>" +100 +"₮" + 
-                    "</span> </div> </div><div class='row'> <div class='col-xs-6 col-md-6'> <h5>Нийт төлөх:</h5> </div> " +
-                    "<div class='col-xs-6 col-md-6'> <span id='' class='label label-success'>" +totalValue +"₮" + 
-                    "</span> </div> </div><input type='hidden' class='form-control extendInput' name='value' value='Зээл төлсөн'>"+
-                    "<input type='hidden' class='form-control extendInput' name='invoiceId' value='"+invoiceId+"'>"+
-                    "<input type='hidden' class='form-control extendInput' name='type' value='Орлого' >"+
-                    "<input type='hidden' class='form-control extendInput' name='money' value='"+totalValue+"'>"+
-                    "<button type='submit' class='btn btn-primary'>Зарлагадах</button></form>";
-            }else{
-                document.getElementById("demo").innerHTML = " <div class='row'>" +  
-                    "<div class='col-xs-6 col-md-6'><h5>Хүүний мөнгө:</h5></div> " +
-                    "<div class='col-xs-6 col-md-6'> <span id='extentInterestMoney' class='label label-danger'>" + interestMoney + 
-                    "</span> </div> </div>";
-            }
+            document.getElementById("demo").innerHTML = "<form id='up_Invoice_Form' role='form' method='POST' action='?toTenderAndZarlagadah'>"+ 
+                "<div class='row'><div class='col-xs-6 col-md-6'><h5>Зээлсэн мөнгө:</h5></div> " +
+                "<div class='col-xs-6 col-md-6'> <span id='' class='label label-danger'>" 
+                + loanMoney + "₮"+ "</span> </div> </div><div class='row'>" +  
+                "<div class='col-xs-6 col-md-6'><h5>Хүүний мөнгө:</h5></div> " +
+                "<div class='col-xs-6 col-md-6'> <span id='extentInterestMoney' class='label label-danger'>" 
+                + interestMoney + "₮"+
+                "</span> </div> </div><div class='row'>" +  
+                "<div class='col-xs-6 col-md-6'><h5>Торгуулийн мөнгө:</h5></div> " +
+                "<div class='col-xs-6 col-md-6'> <span id='' class='label label-danger'>" 
+                + torguuliValue + "₮"+ "</span> </div> </div><div class='row'> <div class='col-xs-6 col-md-6'><h5>Падааны үнэ:</h5></div>" + 
+                "<div class='col-xs-6 col-md-6'> <span id='' class='label label-danger'>" +100 +"₮" + 
+                "</span> </div> </div><div class='row'> <div class='col-xs-6 col-md-6'> <h5>Нийт төлөх:</h5> </div> " +
+                "<div class='col-xs-6 col-md-6'> <span id='' class='label label-success'>" +totalValue +"₮" + 
+                "</span> </div> </div><input type='hidden' class='form-control extendInput' name='value' value='Ломбард зарлагадсан'>"+
+                "<input type='hidden' class='form-control extendInput' name='invoiceId' value='"+invoiceId+"'>"+
+                "<input type='hidden' class='form-control extendInput' name='type' value='Орлого' >"+
+                "<input type='hidden' class='form-control extendInput' name='money' value='"+totalValue+"'>"+
+                "<button type='submit' class='btn btn-primary'>Зарлагадах</button></form>";
+        }else{
 
-        /*}else{
-            location.reload();
-            alert('toruuli tootsono uu');
-        }*/
+            document.getElementById("demo").innerHTML = "<form id='up_Invoice_Form' role='form' method='POST' action='?toTenderAndZarlagadah'>"+ 
+                "<div class='row'><div class='col-xs-6 col-md-6'><h5>Зээлсэн мөнгө:</h5></div> " +
+                "<div class='col-xs-6 col-md-6'> <span id='' class='label label-danger'>" 
+                + loanMoney + "₮"+ "</span> </div> </div><div class='row'>" +  
+                "<div class='col-xs-6 col-md-6'><h5>Хүүний мөнгө:</h5></div> " +
+                "<div class='col-xs-6 col-md-6'> <span id='extentInterestMoney' class='label label-danger'>" 
+                + interestMoney + "₮"+
+                "</span> </div> </div><div class='row'>" +  
+                "<div class='col-xs-6 col-md-6'><h5>Торгуулийн мөнгө:</h5></div> " +
+                "<div class='col-xs-6 col-md-6'> <span id='' class='label label-danger'>" 
+                + torguuliValue + "₮"+ "</span> </div> </div><div class='row'> <div class='col-xs-6 col-md-6'> <h5>Нийт төлөх:</h5> </div> " +
+                "<div class='col-xs-6 col-md-6'> <span id='' class='label label-success'>" +totalValue +"₮" + 
+                "</span> </div> </div><input type='hidden' class='form-control extendInput' name='value' value='Зээл төлсөн'>"+
+                "<input type='hidden' class='form-control extendInput' name='invoiceId' value='"+invoiceId+"'>"+
+                "<input type='hidden' class='form-control extendInput' name='type' value='Орлого' >"+
+                "<input type='hidden' class='form-control extendInput' name='money' value='"+totalValue+"'>"+
+                "<button type='submit' class='btn btn-primary'>Зарлагадах</button></form>";
+
+        }
+
     } 
 }
 </script>

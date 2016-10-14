@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    $('#editableEmp').DataTable({
+    $('.dataTables-example').DataTable({
         dom: '<"html5buttons"B>lTfgitp',
     buttons: [
     { extend: 'copy'},
@@ -119,7 +119,7 @@ $('#empUpdate_form').submit(function(){
     }
 
     $.ajax({
-        url : "update.php",
+        url : "empUpdate.php",
         type: "POST",
         data : data,
         success: function(data, textStatus, jqXHR)
@@ -137,6 +137,7 @@ $('#empUpdate_form').submit(function(){
         {
         }
     });
+    //return false;
 
 });
 
@@ -171,9 +172,9 @@ $('#editableEmp').on('click', 'tr', function () {
 
 } );
 
-$('.updateBtn').on('click', function() {
+$('.invoiceUpdateBtn').on('click', function() {
     alert($(this).attr('value'));
-   // compID = $(this).attr('value');
+    invoiceId = $(this).attr('value');
 
     /* $.ajax({
         url : "getdata.php",
@@ -189,7 +190,7 @@ $('.updateBtn').on('click', function() {
 
 });
 
-$('.extendBtn').on('click', function() {
+$('.invoiceExtendBtn').on('click', function() {
     //alert($(this).attr('value'));
     invoiceId = $(this).attr('value');
 
@@ -204,6 +205,43 @@ $('.extendBtn').on('click', function() {
             $("#btn_"+section).trigger("click");
         }
     }); 
+
+});
+
+$('.invoiceDeleteBtn').on('click', function() {
+    alert($(this).attr('value'));
+    var clientId = $(this).attr('value');
+
+    bootbox.dialog({
+        message: "Та энэ панааныг устгах гэж байна?",
+        title: "<i class='glyphicon glyphicon-trash'></i> Delete !",
+        buttons: {
+            success: {
+                label: "Болих",
+                className: "btn-success",
+                callback: function() {
+                    $('.bootbox').modal('hide');
+                }
+            },
+            danger: {
+                label: "Устгах",
+                className: "btn-danger",
+                callback: function() {
+
+                    $.ajax({ url: "delete.php", 
+                        type: "POST", 
+                        data : { table: section, id: clientId}, 
+                        success: function(data) { 
+                            console.log(data); 
+                            window.location.replace("index.php?invoiceList");
+                        }, 
+                        error: function (jqXHR, textStatus, errorThrown) {
+                        } 
+                    });
+                }
+            }
+        }
+    });
 
 });
 

@@ -37,7 +37,7 @@
             echo $template->render(array('title' => 'Систем админ', 'systemLoged' => $_SESSION['lmAuth'], 
                 'section' => 'registerComp', 'year' => date('Y')));
 
-        }elseif(isset($_GET['toTender'])){
+        }elseif(isset($_GET['toTenderAndZarlagadah'])){
 
             $array = $_SESSION['lmAuth'];
             $compID = $array['compID'];
@@ -171,7 +171,7 @@
             $invPrice = $_POST['invoicePrice'];
 
             $query = "INSERT INTO client(companyID, firstname, lastname, registerNumber, address, phone, createdAt, updatedAt) 
-                VALUES ('".$compID."', '".$fName."', '".$lName."', '".$rd."', '".$phone."', '".$address."', 
+                VALUES ('".$compID."', '".$fName."', '".$lName."', '".$rd."', '".$address."', '".$phone."',  
                 '".date('Y-m-d H:i:s')."', '".date('Y-m-d H:i:s')."')";
             #echo $query;
 

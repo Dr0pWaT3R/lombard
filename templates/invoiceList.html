@@ -29,10 +29,10 @@
                                                 <th>Овог, Нэр</th>
                                                 <th>Утас</th>
                                                 <th>Бараа нэр</th>
-                                                <th>Тоо ширхэг</th>
                                                 <th>Зээлсэн мөнгөн дүн</th>
                                                 <th>Авсан огноо</th>
                                                 <th>Дуусах хугацаа</th>
+                                                <th>Төлөв</th>
                                                 <th>Үйлдэл</th>
                                             </tr>
                                         </thead>
@@ -46,24 +46,34 @@
                                                 {{invList.lastname}}</td>
                                             <td>{{invList.phone}}</td>
                                             <td>{{invList.name}}</td>
-                                            <td>{{invList.number}}</td>
                                             <td>{{invList.loanMoney}}</td>
                                             <td>{{invList.createdAt}}</td>
                                             <td>{{invList.expiredAt}}</td>
+                                            <td {% if invList.mode == 1 %}
+                                                    style="background-color: #448AFF; color: white";
+                                                {% else %}
+                                                    style="background-color: #FF80AB; color: white";
+                                                
+                                            {% endif %}>{% if invList.mode == 1 %}
+                                                Итвэхтэй
+                                                {% else %}
+                                                Итвэхгүй
+                                                {% endif %}
+                                            </td>
                                             <td> 
                                                 <button value="{{invList.id}}"
-                                                class="extendBtn btn
+                                                class="invoiceExtendBtn btn
                                                 btn-success btn-xs" data-title="Edit"
                                                 data-toggle="modal" data-target="#">
                                                     <span class="glyphicon glyphicon-pencil"></span>
                                                 </button>
                                                 <button value="{{invList.id}}"
-                                                class="updateBtn btn btn-primary btn-xs"
+                                                class="invoiceUpdateBtn btn btn-primary btn-xs"
                                                 data-title="Edit" data-toggle="modal" data-target="#">
                                                     <span class="glyphicon glyphicon-pencil"></span>
                                                 </button>
-                                                <button value="{{invList.id}}"
-                                                          class="deleteBtn btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete">
+                                                <button value="{{invList.clientID}}"
+                                                          class="invoiceDeleteBtn btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete">
                                                     <span class="glyphicon glyphicon-trash"></span>
                                                 </button> 
                                             </td>
