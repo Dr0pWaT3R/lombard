@@ -48,7 +48,13 @@
                                             <td>{{invList.name}}</td>
                                             <td>{{invList.loanMoney}}</td>
                                             <td>{{invList.createdAt}}</td>
-                                            <td>{{invList.expiredAt}}</td>
+                                            <td {% if date() > date(invList.expiredAt) %}
+                                                style="background-color: #FF5252; color: white;"
+                                                {% else %}
+                                                style="background-color: #448AFF; color: white;"  
+                                                {% endif %}>
+                                                {{invList.expiredAt | date('Y-m-d')}}
+                                            </td>
                                             <td {% if invList.mode == 1 %}
                                                     style="background-color: #448AFF; color: white";
                                                 {% else %}
@@ -61,7 +67,10 @@
                                                 {% endif %}
                                             </td>
                                             <td> 
-                                                <button value="{{invList.id}}"
+                                                <button value="{% if
+                                                invList.mode == 1 %}
+                                                    {{invList.id}}
+                                                {% endif %}"
                                                 class="invoiceExtendBtn btn
                                                 btn-success btn-xs" data-title="Edit"
                                                 data-toggle="modal" data-target="#">

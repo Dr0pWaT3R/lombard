@@ -19,6 +19,7 @@ $(document).ready(function(){
     ]
 
     });
+
     $('#extendInterest').keyup(function(event) {
         //alert("ajilt bn");
         var loanMoney = parseInt($('#extendLoanMoney').val()); 
@@ -193,18 +194,22 @@ $('.invoiceUpdateBtn').on('click', function() {
 $('.invoiceExtendBtn').on('click', function() {
     //alert($(this).attr('value'));
     invoiceId = $(this).attr('value');
+    if(invoiceId != '') {
+        $.ajax({
+            url : "getdata.php",
+            type: "POST",
+            data : {table: section, id: invoiceId},
+            success: function(data)
+            {
+                setMaterial(data);
+                //alert(data);
+                $("#btn_"+section).trigger("click");
+            }
+        }); 
+    }else {
+        alert('Падаан итвэхгүй байна');
+    }
 
-    $.ajax({
-        url : "getdata.php",
-        type: "POST",
-        data : {table: section, id: invoiceId},
-        success: function(data)
-        {
-            setMaterial(data);
-            //alert(data);
-            $("#btn_"+section).trigger("click");
-        }
-    }); 
 
 });
 
@@ -332,8 +337,8 @@ function setMaterial(json) {
         document.getElementById("extendExpiredDay").textContent = json[0].expiredDay;
     }else{
         document.getElementById("extendExpiredDay").textContent = 'Хугацаа хэтрээгүй';
-        $('#extendInterest').attr('readonly', true);
-        $('#extendTorguuli').attr('readonly', true);
+        $('#extendInterest').attr('disabled', true);
+        $('#extendTorguuli').attr('disabled', true);
     }
     document.getElementById("fName").textContent = json[0].firstname;
     document.getElementById("lName").textContent = json[0].lastname;
